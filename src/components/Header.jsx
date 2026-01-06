@@ -2,7 +2,9 @@ import React from 'react'
 
 function Header() {
   return (
-    <div>Header</div>
+    <div className='bg-white h-10'>
+      
+    </div>
   )
 }
 

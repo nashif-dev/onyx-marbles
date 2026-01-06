@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import './App.css'
+import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Loader from './assets/Loader'
 import Home from './assets/Home'
@@ -8,21 +8,28 @@ import NoPage from './components/NoPage'
 
 
 function App() {
+  const [loading, setLoading] = useState(true);
 
-  const [loading,setLoading] = useState(true)
-  setTimeout(() => { setLoading(false) }, 4000);
+  useEffect(() => {
+    const timer = setTimeout(() => { setLoading(false); }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
-    <Routes>
-      <Route path='/' element={loading?<Loader/>:<Home/>} />
-      <Route path='/gallery' element={<Gallery/>} />
-    
+      {loading && <Loader />}
+      <div className={loading ? "opacity-0" : "animate-[reveal_500ms_ease-out_forwards]"}>
+        
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/admin" element={<adminHome />} />
 
-      <Route path='/*' element={<NoPage/>}/>
-    </Routes>
+          <Route path="/*" element={<NoPage />} />
+        </Routes>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
